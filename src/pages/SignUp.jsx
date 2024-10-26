@@ -21,8 +21,8 @@ const SignUp = () => {
     <>
       <div className="container w-screen min-h-screen flex items-center justify-between pl-[100px]">
         <div className="left w-[35%]">
-          <img className='w-[200px] flex justify-center' src="/code-sync.png" alt="" />
-          <form onSubmit={submitForm} className='w-full mt-[40px]' action="">
+          <img className='w-[300px] flex justify-center' src="/logo.png" alt="" />
+          <form onSubmit={submitForm} className='w-full mt-[10px]' action="">
             <div className="inputBox">
               <input required onChange={(e)=>{setUsername(e.target.value)}} value={username} type="text" placeholder='Username'/>
             </div>

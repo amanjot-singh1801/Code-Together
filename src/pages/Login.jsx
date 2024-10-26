@@ -21,8 +21,8 @@ const Login = () => {
     <>
       <div className="container w-screen min-h-screen flex items-center justify-between pl-[100px]">
         <div className="left w-[35%]">
-          <img className='w-[200px]' src="/code-sync.png" alt="" />
-          <form onSubmit={submitForm} className='w-full mt-[60px]' action="">
+          <img className='w-[300px]' src="/logo.png" alt="" />
+          <form onSubmit={submitForm} className='w-full mt-[30px]' action="">
 
             <div className="inputBox">
               <input required onChange={(e)=>{setEmail(e.target.value)}} value={email} type="email" placeholder='Email'/>
@@ -32,7 +32,7 @@ const Login = () => {
               <input required onChange={(e)=>{setPwd(e.target.value)}} value={pwd} type="password" placeholder='Password'/>
             </div>
 
-            <p className='text-[gray]'>Don't have an account <Link to="/signUp" className='text-[#00AEEF]'>Sign Up</Link></p>
+            <p className='text-[gray]'>Don't have an account <Link to="/" className='text-[#00AEEF]'>Sign Up</Link></p>
             
             <p className='text-red-500 text-[14px] my-2'>{error}</p>
 
