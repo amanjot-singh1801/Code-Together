@@ -19,13 +19,17 @@ const EditorPage = () => {
     const reactNavigator = useNavigate();
     const [clients, setClients] = useState([]);
     const [titleModal, setTitleModal] = useState(false); // Modal state
-    const [projectId,setProjectId] = useState(JSON.parse(localStorage.getItem("projectId") || null));
-    const [projectTitle,setProjectTitle] = useState("");
+    const [projectId, setProjectId] = useState(JSON.parse(localStorage.getItem("projectId") || null));
+    const [projectTitle, setProjectTitle] = useState("");
     const [shouldSave, setShouldSave] = useState(false);
     const [initialCode, setInitialCode] = useState(location.state?.project?.code || "");
-    const [username,setUserName] = useState(location.state?.username || "");
+    const [username, setUserName] = useState(location.state?.username || "");
     const token = JSON.parse(localStorage.getItem('token'));
-    console.log("MY token is : ",token);
+
+    if (!location.state) {
+        return <Navigate to="/" />;
+    }
+
     useEffect(() => {
         codeRef.current = initialCode;
 
@@ -53,7 +57,6 @@ const EditorPage = () => {
                         toast.success(`${joinedUsername} joined the room.`);
                         console.log(`${joinedUsername} joined`);
                     }
-                    // Set the clients state with their individual usernames
                     setClients(clients);
                     socketRef.current.emit(ACTIONS.SYNC_CODE, {
                         code: codeRef.current,
@@ -67,15 +70,12 @@ const EditorPage = () => {
                 ACTIONS.DISCONNECTED,
                 ({ socketId, username }) => {
                     toast.success(`${username} left the room.`);
-                    setClients((prev) => {
-                        return prev.filter(
-                            (client) => client.socketId !== socketId
-                        );
-                    });
+                    setClients((prev) => prev.filter(client => client.socketId !== socketId));
                 }
             );
         };
         init();
+
         return () => {
             socketRef.current.disconnect();
             socketRef.current.off(ACTIONS.JOINED);
@@ -83,65 +83,35 @@ const EditorPage = () => {
         };
     }, []);
 
-    async function copyRoomId() {
-        try {
-            await navigator.clipboard.writeText(roomId);
-            toast.success('Room ID has been copied to your clipboard');
-        } catch (err) {
-            toast.error('Could not copy the Room ID');
-            console.error(err);
-        }
-    }
-
-    function leaveRoom() {
-        localStorage.removeItem("projectId");
-        reactNavigator('/home');
-    }
-
-    if (!location.state) {
-        return <Navigate to="/" />;
-    }
-
-    function handleSaveBtn(){
-
-        if(!projectTitle && !projectId){
-            console.log("Opening Modal");
-            setTitleModal(true);
-            setShouldSave(true);
-        }else{  
-
-            const code = codeRef.current;
-            console.log("Code to save:", code);
-            console.log("projectId : ",projectId);
-            updateCode(code, projectId, token).then((response) => {
-                console.log("Update Code Response:", response);
-            }).catch(error => {
-                console.error("Error updating code:", error);
-            });
-        }
-       
-    }
-
+    // Additional useEffect for save functionality
     useEffect(() => {
-        // Trigger saveCode when projectTitle is updated and shouldSave is true
         if (shouldSave && projectTitle) {
-
-            if(codeRef.current === ""){
+            if (codeRef.current === "") {
                 toast.error("Please Write something to save ");
                 setShouldSave(false);
                 return;
             }
             const title = projectTitle;
             const code = codeRef.current;
-            saveCode(title, code, token).then( (response)=>{
+            saveCode(title, code, token).then((response) => {
                 setProjectId(response.data.projectId);
                 localStorage.setItem("projectId", JSON.stringify(response.data.projectId));
-            })
+            });
             setShouldSave(false); // Reset flag after saving
         }
-        
-    }, [projectTitle,shouldSave,token]);
+    }, [projectTitle, shouldSave, token]);
 
+    function handleSaveBtn() {
+        if (!projectTitle && !projectId) {
+            setTitleModal(true);
+            setShouldSave(true);
+        } else {
+            const code = codeRef.current;
+            updateCode(code, projectId, token).catch(error => {
+                console.error("Error updating code:", error);
+            });
+        }
+    }
     return (
         <div className="mainWrap">
             <div className="aside">
