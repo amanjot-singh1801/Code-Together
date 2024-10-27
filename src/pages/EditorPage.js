@@ -128,12 +128,14 @@ const EditorPage = () => {
 
             if(codeRef.current === ""){
                 toast.error("Please Write something to save ");
+                setShouldSave(false);
                 return;
             }
             const title = projectTitle;
             const code = codeRef.current;
             saveCode(title, code, token).then( (response)=>{
                 setProjectId(response.data.projectId);
+                localStorage.setItem("projectId", JSON.stringify(response.data.projectId));
             })
             setShouldSave(false); // Reset flag after saving
         }
