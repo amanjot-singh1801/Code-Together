@@ -55,7 +55,7 @@ const ShowProject = () => {
       </div>
 
       {projects.length > 0 ? projects.map((project) => (
-        <div key={project.id} className=" mt-8 w-full max-w-7xl">
+        <div key={project._id} className=" mt-8 w-full max-w-7xl">
           <div className="flex flex-col sm:flex-row items-center justify-between p-4 bg-gray-800 rounded-lg shadow-md hover:bg-gray-700 transition duration-300">
             <div className="flex items-center gap-3 w-full" onClick={(e) => handleClick(e, project)}>
               <img className="w-14 h-14 rounded-lg shadow-lg" src="./green_code.png" alt="" />

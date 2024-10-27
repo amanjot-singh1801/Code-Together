@@ -40,6 +40,7 @@ const Createroom = () => {
         e.preventDefault();
         localStorage.removeItem('user');
         localStorage.removeItem('token');
+        localStorage.removeItem('projectId');
         navigate("/login");
     }
     return (
