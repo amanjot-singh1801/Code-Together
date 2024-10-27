@@ -19,7 +19,7 @@ const Modal = ({ closeModal,setProjectTitle,code }) => {
         <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
                 <h2 className="text-2xl font-semibold mb-4">Save Changes</h2>
-                <form>
+                <form onSubmit={handleSubmitTitle}>
                 <input 
                 type='text'
                 value={projectName}
@@ -31,7 +31,7 @@ const Modal = ({ closeModal,setProjectTitle,code }) => {
                 <div className="mt-4 flex justify-center space-x-4">
                     <button
                         className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 transition-all"
-                        onClick={handleSubmitTitle}
+                        type='submit'
                     >
                         Save
                     </button>

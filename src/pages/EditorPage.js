@@ -139,9 +139,8 @@ const EditorPage = () => {
             })
             setShouldSave(false); // Reset flag after saving
         }
-        // get the Id from backend and also put in localStorage and 
-        // NOTE: when ever any user click on the saved code then make sure on that time put that id on localStorage this is very important point
-    }, [projectTitle,shouldSave]);
+        
+    }, [projectTitle,shouldSave,token]);
 
     return (
         <div className="mainWrap">
