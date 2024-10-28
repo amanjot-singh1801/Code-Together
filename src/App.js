@@ -7,7 +7,6 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import ShowProject from './components/ShowProject';
 import PrivateRoute from './components/PrivateRoute';
-import NewFile from './pages/NewFile';
 
 function App() {
     return (
@@ -19,7 +18,7 @@ function App() {
                         success: {
                             theme: {
                                 primary: '#4aed88',
-                                
+
                             },
                         },
                     }}
