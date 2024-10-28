@@ -175,3 +175,10 @@ footer a:hover {
 .noprojectfound{
     width: fit-content;
 }
+
+@media(max-width:768px){
+    .rightForm{
+        max-width:80%;
+        width:100%;
+    }
+}

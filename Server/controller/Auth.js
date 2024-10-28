@@ -62,11 +62,11 @@ exports.login = async(req,res) =>{
         if(!user){
             return res.status(401).json({
                 success: false,
-                message: `User is not Registered with Us Please SignUp to Continue`,
+                message: `User is not Registered with Us Please Login to Continue`,
             });
         }
 
-        if( bcrypt.compare(password,user.password)){
+        if(await bcrypt.compare(password,user.password)){
             const token = jwt.sign(
                 { email: user.email, id: user._id},
                 process.env.JWT_SECRET,

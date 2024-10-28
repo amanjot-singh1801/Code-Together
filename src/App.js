@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import ShowProject from './components/ShowProject';
 import PrivateRoute from './components/PrivateRoute';
+import NewFile from './pages/NewFile';
 
 function App() {
     return (
@@ -25,7 +26,8 @@ function App() {
             </div>
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' element={<SignUp/> }></Route>
+                    {/* <Route path='/' element={<SignUp/> }></Route> */}
+                    <Route path='/' element={<NewFile/> }></Route>
                     <Route path='/login' element={<Login/> }></Route>
 
                     <Route path='/home' element={ <PrivateRoute><Home/></PrivateRoute>  }></Route>
