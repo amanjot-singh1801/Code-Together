@@ -56,7 +56,12 @@ const EditorPage = () => {
                     }
                     // Set the clients state with their individual usernames
                     setClients(clients);
-                    socketRef.current.emit(ACTIONS.SYNC_CODE,codeRef.current);
+
+                    socketRef.current.emit(ACTIONS.SYNC_CODE, {
+                        code: codeRef.current,
+                        socketId,
+                    });
+        
                 }
             );
 
