@@ -56,18 +56,15 @@ const EditorPage = () => {
                     }
                     // Set the clients state with their individual usernames
                     setClients(clients);
-
-                    if (socketId === socketRef.current.id) {
-                        socketRef.current.emit(ACTIONS.SYNC_CODE, {
-                        code: codeRef.current,
-                        socketId,
-                    });
-                }
+                    socketRef.current.emit(ACTIONS.SYNC_CODE,codeRef.current);
                 }
             );
 
             socketRef.current.on(ACTIONS.SYNC_CODE, ({ code }) => {
-                codeRef.current = code;
+                if (code) {
+                    codeRef.current = code;
+                }
+                // codeRef.current = code;
             });
 
             // Listening for disconnected
@@ -83,7 +80,7 @@ const EditorPage = () => {
                 }
             );
         };
-        
+
         init();
         return () => {
             socketRef.current.disconnect();
