@@ -19,6 +19,7 @@ function App() {
                         success: {
                             theme: {
                                 primary: '#4aed88',
+                                
                             },
                         },
                     }}
@@ -26,8 +27,7 @@ function App() {
             </div>
             <BrowserRouter>
                 <Routes>
-                    {/* <Route path='/' element={<SignUp/> }></Route> */}
-                    <Route path='/' element={<NewFile/> }></Route>
+                    <Route path='/' element={<SignUp/> }></Route>
                     <Route path='/login' element={<Login/> }></Route>
 
                     <Route path='/home' element={ <PrivateRoute><Home/></PrivateRoute>  }></Route>
