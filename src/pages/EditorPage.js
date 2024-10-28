@@ -26,7 +26,7 @@ const EditorPage = () => {
     const [username,setUserName] = useState(location.state?.username || "");
     const token = JSON.parse(localStorage.getItem('token'));
     console.log("MY token is : ",token);
-    
+
     useEffect(() => {
         codeRef.current = initialCode;
 
@@ -56,12 +56,19 @@ const EditorPage = () => {
                     }
                     // Set the clients state with their individual usernames
                     setClients(clients);
-                    socketRef.current.emit(ACTIONS.SYNC_CODE, {
+
+                    if (socketId === socketRef.current.id) {
+                        socketRef.current.emit(ACTIONS.SYNC_CODE, {
                         code: codeRef.current,
                         socketId,
                     });
                 }
+                }
             );
+
+            socketRef.current.on(ACTIONS.SYNC_CODE, ({ code }) => {
+                codeRef.current = code;
+            });
 
             // Listening for disconnected
             socketRef.current.on(
@@ -76,6 +83,7 @@ const EditorPage = () => {
                 }
             );
         };
+        
         init();
         return () => {
             socketRef.current.disconnect();
