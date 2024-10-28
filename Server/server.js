@@ -32,7 +32,8 @@ app.use(express.json());
 app.use("/auth",userRoute);
 app.use("/project",auth,projectRouter);
 app.use("/delete",auth,deleteRouter);
-database.connect(); 
+database.connect();
+
 
 const userSocketMap = {};
 function getAllConnectedClients(roomId) {
@@ -57,7 +58,6 @@ io.on('connection', (socket) => {
         userSocketMap[socket.id] = username;
         socket.join(roomId);
         const clients = getAllConnectedClients(roomId);
-
         clients.forEach(({ socketId }) => {
             io.to(socketId).emit(ACTIONS.JOINED, {
                 clients,
@@ -65,10 +65,6 @@ io.on('connection', (socket) => {
                 socketId: socket.id,
             });
         });
-
-        if (roomCodeMap[roomId]) {
-            io.to(socket.id).emit(ACTIONS.SYNC_CODE, { code: roomCodeMap[roomId] });
-        }
     });
 
     socket.on(ACTIONS.CODE_CHANGE, ({ roomId, code }) => {
